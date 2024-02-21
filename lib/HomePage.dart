@@ -152,7 +152,7 @@ class _HomePageState extends State<HomePage> {
         // FAB 1
         SpeedDialChild(
             child: const Icon(
-              Icons.file_upload_outlined,
+              Icons.add,
               color: Colors.white,
             ),
             backgroundColor: const Color(0xFF801E48),
