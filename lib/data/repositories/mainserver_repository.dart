@@ -21,8 +21,7 @@ class MainRepository {
 
   Future<Response?> sentOTP(String email) async {
     try {
-      String url =
-          "https://nodemail-4l1d.onrender.com/sendmail?to=${email}";
+      String url = "https://nodemail-4l1d.onrender.com/sendmail?to=${email}";
       var response = await http.get(Uri.parse(url));
 
       return response;
@@ -44,6 +43,7 @@ class MainRepository {
     var url = Uri.parse(base_url + "auth/login");
     var response =
         await http.post(url, body: {"email": email, "password": password});
+    print("mainrepo $response");
     return response;
   }
 
