@@ -25,6 +25,8 @@ class HomePage extends StatefulWidget {
  */
 class _HomePageState extends State<HomePage> {
   PageController? _controller = PageController(initialPage: 0);
+
+  String selectedop = 'Pending Requests';
   bool isPressed = false;
   //final AuthService _auth = AuthService();
 
@@ -56,10 +58,9 @@ class _HomePageState extends State<HomePage> {
     super.dispose();
   }
 
+  @override
   Widget build(BuildContext context) {
-    //user = _auth.returnUser();
-    //isEmailVerified = user!.emailVerified;
-    // Posts getPost = Posts();
+
     Request getReq = Request();
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     user = userProvider.user;
@@ -67,7 +68,38 @@ class _HomePageState extends State<HomePage> {
       backgroundColor: Colors.white,
       appBar: AppBar(
         centerTitle: false,
-        title: Text('Dashboard'),
+       title: Row(
+          children: [
+            Container(
+              padding: const EdgeInsets.symmetric(horizontal: 16),
+              decoration: BoxDecoration(
+                color: Color.fromARGB(255, 193, 0, 97),
+                borderRadius: BorderRadius.circular(20), // Adjust the radius as needed
+              ),
+              child: DropdownButton<String>(
+                value: selectedop,
+                onChanged: (String? newValue) {
+                  setState(() {
+                    selectedop = newValue!;
+                  });
+                  // Add logic to navigate to the selected screen based on newValue
+                  // For now, just print the selected option
+                  print('Selected: $newValue');
+                },
+                items: ['Pending Requests', 'Approved Requests', 'Disapproved Requests']
+                    .map<DropdownMenuItem<String>>((String value) {
+                  return DropdownMenuItem<String>(
+                    value: value,
+                    child: Text(value),
+                  );
+                }).toList(),
+                dropdownColor: const Color(0xFF801E48),
+                underline: Container(), // Remove the underline
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+          ],
+        ),
         actions: <Widget>[
           Align(
             //alignment: const Alignment(0.9, -1),
@@ -204,7 +236,7 @@ class _HomePageState extends State<HomePage> {
                 color: Colors.white,
                 fontSize: 16.0),
             labelBackgroundColor: const Color(0xFF801E48)),
-         ],
+      ],
     );
   }
 }
