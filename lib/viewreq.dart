@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import './videoplayer.dart';
 
 class ViewReq extends StatefulWidget {
   final dynamic snap;
@@ -10,6 +11,104 @@ class ViewReq extends StatefulWidget {
 }
 
 class _ViewReqState extends State<ViewReq> {
+  void handleApprove(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirm Approval'),
+          content: Text('Are you sure you want to approve this request?'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              icon: Icon(Icons.close, color: Colors.red),
+            ),
+            IconButton(
+              onPressed: () {
+                // Perform the approval action
+                approveRequest();
+                handleSnackBar(context, 'Request is approved!', 1);
+                Navigator.pop(context); // Close the dialog
+              },
+              icon: Icon(
+                Icons.check,
+                color: Colors.green,
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  void handleDisapprove(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Confirm Disapproval'),
+          content: Text('Are you sure you want to disapprove this request?'),
+          actions: [
+            IconButton(
+              onPressed: () {
+                Navigator.pop(context); // Close the dialog
+              },
+              icon: Icon(Icons.close, color: Colors.red),
+            ),
+            IconButton(
+              onPressed: () {
+                // Perform the approval action
+                disapproveRequest();
+                handleSnackBar(context, 'Request is disapproved!', 2);
+                Navigator.pop(context); // Close the dialog
+              },
+              icon: Icon(
+                Icons.check,
+                color: Colors.green,
+              ),
+            )
+          ],
+        );
+      },
+    );
+  }
+
+  void approveRequest() {
+    // Move the request to the approved database
+    // Implement this according to your database structure and method
+  }
+
+  void disapproveRequest() {
+    // Move the request to the disapproved database
+    // Implement this according to your database structure and method
+  }
+
+  void handleSnackBar(BuildContext context, String message, int i) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Row(
+          children: [
+            Icon(
+              i == 1 ? Icons.check_circle : Icons.disabled_by_default_outlined,
+              color: Colors.white,
+            ),
+            SizedBox(width: 8),
+            Text(message),
+          ],
+        ),
+        backgroundColor: i == 1 ? Colors.green : Colors.red,
+        duration: Duration(seconds: 2),
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(
+            Radius.circular(10),
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -25,16 +124,18 @@ class _ViewReqState extends State<ViewReq> {
             children: [
               // Display audiobook name and author at the top
               Text(
-                'Audiobook: ${widget.snap["audiobookName"]}',
+                'Audiobook: Class ${widget.snap["Class"]} ${widget.snap["ChapterName"]}',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
               Text('Author: ${widget.snap["audiobookAuthor"]}'),
               SizedBox(height: 20),
-              // Display all details of the snap here
-              Text('Snap ID: ${widget.snap['snapId']}'),
-              Text('Publish Time: ${widget.snap['publishTime']}'),
-              // Add more details as needed
-              SizedBox(height: 20),
+
+              VideoScreen(
+                className: widget.snap['Class'],
+                chapterName: widget.snap['ChapterName'],
+              ),
+
+              SizedBox(height: 30),
               // Buttons for approving and disapproving in the same row
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -42,6 +143,7 @@ class _ViewReqState extends State<ViewReq> {
                   ElevatedButton(
                     onPressed: () {
                       // Handle approving action
+                      handleApprove(context);
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Colors.green,
@@ -52,6 +154,7 @@ class _ViewReqState extends State<ViewReq> {
                   ElevatedButton(
                     onPressed: () {
                       // Handle disapproving action
+                      handleDisapprove(context);
                     },
                     style: ElevatedButton.styleFrom(
                       primary: Colors.red,
