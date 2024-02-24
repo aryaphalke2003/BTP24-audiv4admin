@@ -28,9 +28,9 @@ class _RequestCardState extends State<RequestCard> {
   void initState() {
     super.initState();
     final userProvider = Provider.of<UserProvider>(context, listen: false);
-    user = userProvider.user;
-    author = widget.snap["author"];
-    organization = widget.snap["organization"];
+    user = userProvider.user ?? null;
+    author = widget.snap["Author"] ?? "Anonymous";
+    organization = "IIT Ropar";
   }
 
   @override
@@ -47,25 +47,25 @@ class _RequestCardState extends State<RequestCard> {
       },
       child: Container(
         decoration: const BoxDecoration(
-        border: Border(
-          left: BorderSide(
-            color:  Colors.white,
-            width: 7.0,
-          ),
-          right: BorderSide(
-            color: Colors.white,
-            width: 7.0,
-          ),
-          top: BorderSide(
-            color: Colors.white,
-            width: 4.0,
-          ),
-          bottom: BorderSide(
-            color: Colors.white,
-            width: 4.0,
+          border: Border(
+            left: BorderSide(
+              color: Colors.white,
+              width: 7.0,
+            ),
+            right: BorderSide(
+              color: Colors.white,
+              width: 7.0,
+            ),
+            top: BorderSide(
+              color: Colors.white,
+              width: 4.0,
+            ),
+            bottom: BorderSide(
+              color: Colors.white,
+              width: 4.0,
+            ),
           ),
         ),
-      ),
         child: FutureBuilder<String>(
           future: null,
           builder: (context, snapshot) {
@@ -79,24 +79,36 @@ class _RequestCardState extends State<RequestCard> {
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(widget.snap['Class'].toString(),
-                      style: const TextStyle(
-                        color: Color.fromARGB(255, 134, 11, 2),
-                        fontSize: 19,
-                        fontWeight: FontWeight.bold,
-                      )),
-                  Text(author,
-                      style: const TextStyle(
-                        color:
-                            const Color.fromARGB(255, 53, 73, 83),
-                        fontSize: 14,
-                      )),
-                  Text(organization,
-                      style: const TextStyle(
-                        color:
-                            Color.fromARGB(255, 99, 99, 99),
-                        fontSize: 12,
-                      )),
+                  Text(
+                    'Class ${widget.snap['Class']} ${widget.snap['Subject']}',
+                    style: const TextStyle(
+                      color: Color.fromARGB(255, 134, 11, 2),
+                      fontSize: 14,
+                      fontWeight: FontWeight.bold,
+                    ),
+                  ),
+                  Text(
+                    author,
+                    style: const TextStyle(
+                      color: const Color.fromARGB(255, 53, 73, 83),
+                      fontSize: 14,
+                    ),
+                  ),
+                  Text(
+                    organization,
+                    style: const TextStyle(
+                      color: Color.fromARGB(255, 99, 99, 99),
+                      fontSize: 12,
+                    ),
+                  ),
+                  SizedBox(height: 10),
+                  Text(
+                    'Chapter: ${widget.snap['ChapterName']}',
+                    style: const TextStyle(
+                      color: Colors.black,
+                      fontSize: 16,
+                    ),
+                  ),
                 ],
               ),
             );
@@ -106,43 +118,3 @@ class _RequestCardState extends State<RequestCard> {
     );
   }
 }
-
-// class SnapDetailsScreen extends StatelessWidget {
-//   final dynamic snap;
-
-//   const SnapDetailsScreen({required this.snap});
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Snap Details'),
-//       ),
-//       body: Center(
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             // Display all details of the snap here
-//             Text('Snap ID: ${snap['snapId']}'),
-//             Text('Publish Time: ${snap['publishTime']}'),
-//             // Add more details as needed
-//             // Provide options for approving or disapproving
-//             ElevatedButton(
-//               onPressed: () {
-//                 // Handle approving action
-//               },
-//               child: Text('Approve'),
-//             ),
-//             ElevatedButton(
-//               onPressed: () {
-//                 // Handle disapproving action
-//               },
-//               child: Text('Disapprove'),
-//             ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }
-

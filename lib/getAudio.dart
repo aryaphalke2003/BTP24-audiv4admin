@@ -28,16 +28,22 @@ class Audios {
   }
 
   /// The function returns all the audios for a particular chapter.
-  Future<List> selectedAudio(className, chapterName) async {
+  Future<List> selectedAudio(className, chapterName, subjectName) async {
     try {
-      String base_url =
-          "https://arya09.pythonanywhere.com/audiofiles/audiofiles/";
-      print("hiiiiii");
-      print("${base_url + className}_" + chapterName);
-      var result =
-          await http.get(Uri.parse("${base_url + className}_" + chapterName));
-      print(result.statusCode);
-      print(result.body);
+      print("indgetaudio");
+      String base_url = "http://127.0.0.1:8000/audiofiles/audiofiles/";
+
+   
+        var result = await http.post(
+          Uri.parse(base_url),
+          body: {
+            'Class': className,
+            'ChapterName': chapterName,
+            'Subject': subjectName,
+          },
+        );
+
+        
       if (result.statusCode == 200) {
         var k = jsonDecode(result.body);
         if (k.length == 0) {
@@ -45,7 +51,7 @@ class Audios {
         }
         var new_result = [];
         new_result.add(k[0]);
-        print(new_result);
+        print("returning this: ${new_result}");
 
         return new_result;
       } else {

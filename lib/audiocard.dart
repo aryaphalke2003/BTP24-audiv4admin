@@ -1,87 +1,8 @@
-// import 'package:flutter/material.dart';
-
-// import 'getAudio.dart';
-// import 'package:video_player/video_player.dart';
-// import 'videoItems.dart';
-
-// class AudioCard extends StatefulWidget {
-//   final snap;
-//   const AudioCard({required this.snap});
-
-//   @override
-//   _AudioCardState createState() => _AudioCardState();
-// }
-
-// // ignore: slash_for_doc_comments
-// /**\
-//  * This is the card that displays the title and image on the 
-//  * audiobook page in the student page.
-//  */
-// class _AudioCardState extends State<AudioCard> {
-//   int postLen = 0;
-//   int index = 0;
-//   Audios getaudio = Audios();
-//   List <Duration> _sections = [];
-//   late VideoPlayerController _controller;
-
-//   @override
-//   void initState() {
-//     super.initState();
-//     _controller = VideoPlayerController.network(
-//         widget.snap['AudioFile'].toString())
-//       ..initialize().then((_) {
-//         setState(() {
-//           postLen = _controller.value.duration.inSeconds;
-          
-//           for (int i = 0; i < postLen; i += 600) {
-//             _sections.add(Duration(seconds: i));
-//           }
-//         });
-//       });
-
-//     // Get the length of the video file and divide it into 5 parts
-    
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     // getData();
-//     return Column(children: [
-//       Container(
-//       height: _controller.value.isInitialized ? 200 : 50,
-//       child: _controller.value.isInitialized ? VideoItems(
-//         videoPlayerController: _controller,
-//         looping: true,
-//         autoplay: false,
-//       ): CircularProgressIndicator(),
-//       ),
-//       SizedBox(height: 10),
-//       ElevatedButton(
-//         onPressed: () => {
-//           setState(() {
-//             index = (index - 1) % _sections.length;
-//             _controller.seekTo(_sections[index]);
-//           }),
-//         },
-//         child: Text('Previous Section'),
-//       ),
-//       ElevatedButton(
-//         onPressed: () => {
-//           setState(() {
-//             index = (index + 1) % _sections.length;
-//             _controller.seekTo(_sections[index]);
-//           }),
-//         },
-//         child: Text('Next Section'),
-//       ),
-//     ],
-//     );
-//   }
-// }
 
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'videoItems.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class AudioCard extends StatefulWidget {
   final snap;
@@ -123,6 +44,15 @@ class _AudioCardState extends State<AudioCard> {
     super.dispose();
   }
 
+  void _launchPDF(String pdfLink) async {
+    // Check if the PDF link is not null
+    if (pdfLink != null) {
+      // Use the url_launcher package to open the PDF link
+      await launch(pdfLink);
+    }
+  }
+
+
   @override
   Widget build(BuildContext context) {
     return Column(
@@ -135,28 +65,56 @@ class _AudioCardState extends State<AudioCard> {
                   looping: true,
                   autoplay: false,
                 )
-              : CircularProgressIndicator(),
+              : widget.snap['AudioFile'] != null ? CircularProgressIndicator() : Text('No Audiobook available'),
         ),
         SizedBox(height: 10),
-        ElevatedButton(
-          onPressed: () {
-            setState(() {
-              index = (index - 1) % _sections.length;
-              _controller.seekTo(_sections[index]);
-            });
-          },
-          child: Text('Previous Section'),
-        ),
-        ElevatedButton(
-          onPressed: () {
-            setState(() {
-              index = (index + 1) % _sections.length;
-              _controller.seekTo(_sections[index]);
-            });
-          },
-          child: Text('Next Section'),
-        ),
+        // Conditionally render playback controls and buffering indicator
+        widget.snap['AudioFile'] != null
+            ? Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        index = (index - 1) % _sections.length;
+                        _controller.seekTo(_sections[index]);
+                      });
+                    },
+                    child: Text('Previous Section'),
+                  ),
+                  SizedBox(width: 20),
+                  ElevatedButton(
+                    onPressed: () {
+                      setState(() {
+                        index = (index + 1) % _sections.length;
+                        _controller.seekTo(_sections[index]);
+                      });
+                    },
+                    child: Text('Next Section'),
+                  ),
+                ],
+              )
+            : SizedBox.shrink(), // Empty widget if AudioFile is null
+        SizedBox(height: 20),
+        widget.snap['PDF'] != null
+            ? ElevatedButton(
+                onPressed: () {
+                  // Handle PDF download action
+                  // You can implement the PDF download logic here
+                  _launchPDF(widget.snap['PDF']);
+                },
+                child: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Icon(Icons.picture_as_pdf),
+                    SizedBox(width: 8),
+                    Text('Download PDF'),
+                  ],
+                ),
+              )
+            : Text('No PDF available'),
       ],
     );
   }
 }
+

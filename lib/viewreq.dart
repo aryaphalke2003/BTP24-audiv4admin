@@ -1,5 +1,7 @@
+import 'package:audiadmin/audiocard.dart';
 import 'package:flutter/material.dart';
 import './videoplayer.dart';
+import 'package:http/http.dart' as http;
 
 class ViewReq extends StatefulWidget {
   final dynamic snap;
@@ -75,9 +77,19 @@ class _ViewReqState extends State<ViewReq> {
     );
   }
 
-  void approveRequest() {
+  void approveRequest() async {
     // Move the request to the approved database
     // Implement this according to your database structure and method
+    print("inapproval");
+    String base_url = "http://127.0.0.1:8000/audiofiles/audiofiles";
+    String ff = '$base_url/approve/${widget.snap["id"]}/';
+    print("in ff $ff");
+    var result = await http.post(
+      Uri.parse(ff),
+    );
+    if (result.statusCode == 200) print("approved ");
+
+    print(result.body);
   }
 
   void disapproveRequest() {
@@ -127,13 +139,10 @@ class _ViewReqState extends State<ViewReq> {
                 'Audiobook: Class ${widget.snap["Class"]} ${widget.snap["ChapterName"]}',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold),
               ),
-              Text('Author: ${widget.snap["audiobookAuthor"]}'),
+              Text('Author: ${widget.snap["description"]}'),
               SizedBox(height: 20),
 
-              VideoScreen(
-                className: widget.snap['Class'],
-                chapterName: widget.snap['ChapterName'],
-              ),
+              AudioCard(snap: widget.snap),
 
               SizedBox(height: 30),
               // Buttons for approving and disapproving in the same row

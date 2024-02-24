@@ -5,8 +5,9 @@ import 'getAudio.dart';
 class VideoScreen extends StatelessWidget {
   final String className;
   final String chapterName;
+  final String subjectName;
 
-  VideoScreen({required this.className, required this.chapterName});
+  VideoScreen({required this.className, required this.chapterName, required this.subjectName});
 
   @override
   Widget build(BuildContext context) {
@@ -15,7 +16,7 @@ class VideoScreen extends StatelessWidget {
     return Stack(
       children: [
         FutureBuilder<List>(
-          future: getAudio.selectedAudio(className, chapterName),
+          future: getAudio.selectedAudio(className, chapterName, subjectName),
           builder: (context, snapshot) {
             return (snapshot.hasData && snapshot.data!.isNotEmpty)
                 ? ListView.builder(
