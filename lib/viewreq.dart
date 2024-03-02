@@ -111,7 +111,7 @@ class _ViewReqState extends State<ViewReq> {
           ],
         ),
         backgroundColor: i == 1 ? Colors.green : Colors.red,
-        duration: Duration(seconds: 2),
+        duration: Duration(seconds: 4),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.all(
             Radius.circular(10),

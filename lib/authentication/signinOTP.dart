@@ -144,7 +144,7 @@ class _SignInOTPState extends State<SignInOTP> {
                                                 ],
                                               ),
                                               backgroundColor: Colors.green,
-                                              duration: Duration(seconds: 2),
+                                              duration: Duration(seconds: 4),
                                               shape: RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.all(
                                                   Radius.circular(10),
@@ -195,7 +195,7 @@ class _SignInOTPState extends State<SignInOTP> {
                                                 ],
                                               ),
                                               backgroundColor: Colors.green,
-                                              duration: Duration(seconds: 2),
+                                              duration: Duration(seconds: 4),
                                               shape: RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.all(
                                                   Radius.circular(10),
@@ -216,7 +216,7 @@ class _SignInOTPState extends State<SignInOTP> {
                                                 ],
                                               ),
                                               backgroundColor: Colors.red,
-                                              duration: Duration(seconds: 2),
+                                              duration: Duration(seconds: 4),
                                               shape: RoundedRectangleBorder(
                                                 borderRadius: BorderRadius.all(
                                                   Radius.circular(10),

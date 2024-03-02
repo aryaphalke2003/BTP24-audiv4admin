@@ -135,7 +135,7 @@ class _EditProfileState extends State<EditProfile> {
                   ],
                 ),
                 backgroundColor: Colors.green,
-                duration: Duration(seconds: 2),
+                duration: Duration(seconds: 4),
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.all(
                     Radius.circular(10),

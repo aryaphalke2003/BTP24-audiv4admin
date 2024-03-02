@@ -1,257 +1,8 @@
-// // import 'package:flutter/material.dart';
-
-// // class AddChapter extends StatefulWidget {
-// //   @override
-// //   _AddChapterState createState() => _AddChapterState();
-// // }
-
-// // class _AddChapterState extends State<AddChapter> {
-// //   String? classDropDown; // Updated to allow null
-// //   bool classDone = false;
-// //   String? subjectDropDown; // Updated to allow null
-// //   bool subjectDone = false;
-// //   String selectedChapter = ''; // Default selected chapter
-// //   List<String>? classOptions = ['Class 1', 'Class 2', 'Class 3']; // Replace with API data
-// //   List<String>? subjectOptions = ['Subject A', 'Subject B', 'Subject C']; // Replace with API data
-// //   String? errorMessage;
-
-// //   @override
-// //   Widget build(BuildContext context) {
-// //     return Scaffold(
-// //       appBar: AppBar(
-// //         title: Text('Add Chapter'),
-// //       ),
-// //       body: Padding(
-// //         padding: const EdgeInsets.all(16.0),
-// //         child: Column(
-// //           mainAxisAlignment: MainAxisAlignment.center,
-// //           children: [
-// //             classOptions == null || classOptions!.isEmpty
-// //                 ? Text(
-// //                     'No classes exist',
-// //                     style: TextStyle(color: Colors.red),
-// //                   )
-// //                 : DropdownButton<String>(
-// //                     // Choosing class
-// //                     isExpanded: true,
-// //                     value: classDropDown,
-// //                     icon: const Icon(Icons.keyboard_arrow_down),
-// //                     items: classOptions?.map<DropdownMenuItem<String>>((String items) {
-// //                       return DropdownMenuItem<String>(
-// //                         value: items,
-// //                         child: Text(
-// //                           items,
-// //                           style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-// //                         ),
-// //                       );
-// //                     }).toList() ?? [],
-// //                     onChanged: (String? newValue) {
-// //                       // stores the class selected.
-// //                       setState(() {
-// //                         classDropDown = newValue!;
-// //                         classDone = true;
-// //                       });
-// //                     },
-// //                   ),
-// //             const SizedBox(height: 20.0),
-// //             subjectOptions == null || subjectOptions!.isEmpty
-// //                 ? Text(
-// //                     'No subjects exist',
-// //                     style: TextStyle(color: Colors.red),
-// //                   )
-// //                 : DropdownButton<String>(
-// //                     // Choosing subject
-// //                     isExpanded: true,
-// //                     value: subjectDropDown,
-// //                     icon: const Icon(Icons.keyboard_arrow_down),
-// //                     items: subjectOptions?.map<DropdownMenuItem<String>>((String items) {
-// //                       return DropdownMenuItem<String>(
-// //                         value: items,
-// //                         child: Text(
-// //                           items,
-// //                           style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-// //                         ),
-// //                       );
-// //                     }).toList() ?? [],
-// //                     onChanged: (String? newValue) {
-// //                       // storing the chosen subject
-// //                       setState(() {
-// //                         subjectDropDown = newValue!;
-// //                         subjectDone = true;
-// //                       });
-// //                     },
-// //                   ),
-// //             const SizedBox(height: 20.0),
-// //             TextField(
-// //               onChanged: (value) {
-// //                 setState(() {
-// //                   selectedChapter = value;
-// //                 });
-// //               },
-// //               decoration: InputDecoration(
-// //                 labelText: 'Chapter Name',
-// //                 border: OutlineInputBorder(),
-// //               ),
-// //             ),
-// //             SizedBox(height: 20),
-// //             ElevatedButton(
-// //               onPressed: () async {
-// //                 if (!classDone || !subjectDone) {
-// //                   // Check if class and subject are selected
-// //                   setState(() {
-// //                     errorMessage = 'Please select class and subject.';
-// //                   });
-// //                   return;
-// //                 }
-
-// //                 // Proceed with your logic for saving the chapter
-// //                 print('Selected Class: $classDropDown');
-// //                 print('Selected Subject: $subjectDropDown');
-// //                 print('Selected Chapter: $selectedChapter');
-// //                 Navigator.pop(context); // Close the AddChapter screen
-// //               },
-// //               child: Text('Save Chapter'),
-// //             ),
-// //           ],
-// //         ),
-// //       ),
-// //     );
-// //   }
-// // }
-
-// import 'package:flutter/material.dart';
-
-// class AddChapter extends StatefulWidget {
-//   @override
-//   _AddChapterState createState() => _AddChapterState();
-// }
-
-// class _AddChapterState extends State<AddChapter> {
-//   String? classDropDown;
-//   bool classDone = false;
-//   String? subjectDropDown;
-//   bool subjectDone = false;
-//   String selectedChapter = '';
-//   List<String>? classOptions = ['Class 1', 'Class 2', 'Class 3'];
-//   List<String>? subjectOptions = ['Subject A', 'Subject B', 'Subject C'];
-//   String? errorMessage;
-
-//   @override
-//   Widget build(BuildContext context) {
-//     return Scaffold(
-//       appBar: AppBar(
-//         title: Text('Add Chapter'),
-//       ),
-//       body: Padding(
-//         padding: const EdgeInsets.all(16.0),
-//         child: Column(
-//           mainAxisAlignment: MainAxisAlignment.center,
-//           children: [
-//             buildDropdown(
-//               label: 'Choose Class',
-//               value: classDropDown,
-//               items: classOptions,
-//               onChanged: (String? newValue) {
-//                 setState(() {
-//                   classDropDown = newValue!;
-//                   classDone = true;
-//                 });
-//               },
-//             ),
-//             const SizedBox(height: 20.0),
-//             buildDropdown(
-//               label: 'Choose Subject',
-//               value: subjectDropDown,
-//               items: subjectOptions,
-//               onChanged: (String? newValue) {
-//                 setState(() {
-//                   subjectDropDown = newValue!;
-//                   subjectDone = true;
-//                 });
-//               },
-//             ),
-//             const SizedBox(height: 20.0),
-//             TextField(
-//               onChanged: (value) {
-//                 setState(() {
-//                   selectedChapter = value;
-//                 });
-//               },
-//               decoration: InputDecoration(
-//                 labelText: 'Chapter Name',
-//                 border: OutlineInputBorder(),
-//               ),
-//             ),
-//             SizedBox(height: 20),
-//             ElevatedButton(
-//               onPressed: () async {
-//                 if (!classDone || !subjectDone) {
-//                   setState(() {
-//                     errorMessage = 'Please select class and subject.';
-//                   });
-//                   return;
-//                 }
-
-//                 if (selectedChapter.isEmpty) {
-//                   setState(() {
-//                     errorMessage = 'Chapter name cannot be empty.';
-//                   });
-//                   return;
-//                 }
-
-//                 // Proceed with your logic for saving the chapter
-//                 print('Selected Class: $classDropDown');
-//                 print('Selected Subject: $subjectDropDown');
-//                 print('Selected Chapter: $selectedChapter');
-//                 Navigator.pop(context); // Close the AddChapter screen
-//               },
-//               child: Text('Save Chapter'),
-//             ),
-//             if (errorMessage != null)
-//               Text(
-//                 errorMessage!,
-//                 style: TextStyle(color: Colors.red),
-//               ),
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-
-//   Widget buildDropdown({
-//     required String label,
-//     required String? value,
-//     required List<String>? items,
-//     required void Function(String?) onChanged,
-//   }) {
-//     return items == null || items.isEmpty
-//         ? Text(
-//             'No $label exist',
-//             style: TextStyle(color: Colors.red),
-//           )
-//         : DropdownButton<String>(
-//             isExpanded: true,
-//             value: value,
-//             icon: const Icon(Icons.keyboard_arrow_down),
-//             items: items.map<DropdownMenuItem<String>>((String item) {
-//               return DropdownMenuItem<String>(
-//                 value: item,
-//                 child: Text(
-//                   item,
-//                   style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-//                 ),
-//               );
-//             }).toList(),
-//             onChanged: onChanged,
-//           );
-//   }
-// }
-
-
+import 'dart:convert';
 import 'package:flutter/material.dart';
+import 'package:http/http.dart';
 import 'package:audiadmin/common_app_drawer.dart'; // Import CommonAppBarDrawer
-
-
+import 'package:http/http.dart' as http;
 
 class AddChapter extends StatefulWidget {
   @override
@@ -259,123 +10,262 @@ class AddChapter extends StatefulWidget {
 }
 
 class _AddChapterState extends State<AddChapter> {
-
-
-  String? classDropDown;
-  bool classDone = false;
-  String? subjectDropDown;
-  bool subjectDone = false;
   String selectedChapter = '';
-  List<String>? classOptions = ['Class 1', 'Class 2', 'Class 3'];
-  List<String>? subjectOptions = ['Subject A', 'Subject B', 'Subject C'];
+  int selectedGrade = 0; // Default selected grade
+  String selectedSubject = ''; // Default selected subject
+  List<int> grades = [];
+  List<String> subjectOptions = [];
   String? errorMessage;
+  TextEditingController chapterController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    // Fetch grades when the screen is initialized
+    fetchGrades();
+  }
+
+  Future<void> fetchGrades() async {
+    try {
+      var response = await http.post(
+        Uri.parse('http://127.0.0.1:8000/audiofiles/audiofiles/fetch-data/'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'type': 'fetchgrades',
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> gradesData = jsonDecode(response.body);
+
+        setState(() {
+          grades =
+              gradesData.map<int>((grade) => grade['grade'] as int).toList();
+          grades.sort();
+          selectedGrade = grades.isNotEmpty ? grades[0] : 0;
+        });
+      } else {
+        setState(() {
+          errorMessage = 'Failed to fetch grades. Please try again.';
+        });
+      }
+    } catch (error) {
+      setState(() {
+        errorMessage = 'An error occurred. Please try again later.';
+      });
+    }
+  }
+
+  Future<void> fillup(int grade) async {
+    try {
+      var response = await http.post(
+        Uri.parse('http://127.0.0.1:8000/audiofiles/audiofiles/fetch-data/'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'type': 'fetchsubjects',
+          'grade': grade,
+        }),
+      );
+
+      if (response.statusCode == 200) {
+        final List<dynamic> subdata = jsonDecode(response.body);
+
+        setState(() {
+          // Assuming subjectsDataList is a List<Map<String, dynamic>>
+          subjectOptions = subdata
+              .map<String>((subject) => subject['subjectname'] as String)
+              .toList();
+          selectedSubject = subjectOptions.isNotEmpty ? subjectOptions[0] : '';
+          print("subops: ${subjectOptions}");
+        });
+      } else {
+        setState(() {
+          errorMessage = 'Failed to fetch subjects. Please try again.';
+        });
+      }
+    } catch (error) {
+      setState(() {
+        errorMessage = 'An error occurred. Please try again later.';
+      });
+    }
+  }
+
+  Future<Response> AddChapterFunc(int grade, String subject, String chapter) async {
+    try {
+      var response = await http.post(
+        Uri.parse('http://127.0.0.1:8000/audiofiles/audiofiles/add-data/'),
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: jsonEncode({
+          'type': 'chapter',
+          'grade': grade,
+          'subject': subject,
+          'chapter': chapter,
+        }),
+      );
+
+      return response;
+    } catch (error) {
+      // An error occurred during the HTTP request
+      throw Exception('An error occurred. Please try again later.');
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return CommonAppBarDrawer( // Wrap your screen with CommonAppBarDrawer
+    return CommonAppBarDrawer(
+      // Wrap your screen with CommonAppBarDrawer
       title: 'Add Chapter',
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            buildDropdown(
-              label: 'Choose Class',
-              value: classDropDown,
-              items: classOptions,
-              onChanged: (String? newValue) {
-                setState(() {
-                  classDropDown = newValue!;
-                  classDone = true;
-                });
-              },
+            Container(
+              child: Text(
+                'Select Grade:',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+              alignment: Alignment.centerLeft,
             ),
+            const SizedBox(height: 8.0),
+            grades.isEmpty
+                ? Text(
+                    'No grades exist',
+                    style: TextStyle(color: Colors.red),
+                  )
+                : DropdownButton<int>(
+                    // Choosing grade
+                    isExpanded: true,
+                    value: selectedGrade,
+                    icon: const Icon(Icons.keyboard_arrow_down),
+                    items: grades.map<DropdownMenuItem<int>>((int grade) {
+                      return DropdownMenuItem<int>(
+                        value: grade,
+                        child: Text(
+                          grade.toString(),
+                          style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (int? newValue) {
+                      setState(() {
+                        selectedGrade = newValue ?? 0;
+                        fillup(selectedGrade);
+                      });
+                    },
+                  ),
             const SizedBox(height: 20.0),
-            buildDropdown(
-              label: 'Choose Subject',
-              value: subjectDropDown,
-              items: subjectOptions,
-              onChanged: (String? newValue) {
-                setState(() {
-                  subjectDropDown = newValue!;
-                  subjectDone = true;
-                });
-              },
+
+            //sub
+            Container(
+              child: Text(
+                'Select Subject:',
+                style: TextStyle(
+                  fontSize: 18,
+                ),
+              ),
+              alignment: Alignment.centerLeft,
             ),
+            const SizedBox(height: 8.0),
+            subjectOptions.isEmpty
+                ? Text(
+                    'No subject exist',
+                    style: TextStyle(color: Colors.red),
+                  )
+                : DropdownButton<String>(
+                    // Choosing grade
+                    isExpanded: true,
+                    value: selectedSubject,
+                    icon: const Icon(Icons.keyboard_arrow_down),
+                    items: subjectOptions
+                        .map<DropdownMenuItem<String>>((String chapter) {
+                      return DropdownMenuItem<String>(
+                        value: chapter,
+                        child: Text(
+                          chapter,
+                          style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
+                        ),
+                      );
+                    }).toList(),
+                    onChanged: (String? newValue) {
+                      setState(() {
+                        selectedSubject = newValue ?? '';
+                      });
+                    },
+                  ),
             const SizedBox(height: 20.0),
+
+            //chapter
+
             TextField(
-              onChanged: (value) {
-                setState(() {
-                  selectedChapter = value;
-                });
-              },
+              controller: chapterController,
               decoration: InputDecoration(
-                labelText: 'Chapter Name',
-                border: OutlineInputBorder(),
+                labelText: 'Enter Chapter',
+                errorText: errorMessage,
               ),
             ),
             SizedBox(height: 20),
+
             ElevatedButton(
               onPressed: () async {
-                if (!classDone || !subjectDone) {
-                  setState(() {
-                    errorMessage = 'Please select class and subject.';
-                  });
-                  return;
-                }
+                selectedChapter = chapterController.text;
 
                 if (selectedChapter.isEmpty) {
                   setState(() {
-                    errorMessage = 'Chapter name cannot be empty.';
+                    errorMessage = 'Chapter name is required.';
                   });
                   return;
                 }
 
-                // Proceed with your logic for saving the chapter
-                print('Selected Class: $classDropDown');
-                print('Selected Subject: $subjectDropDown');
-                print('Selected Chapter: $selectedChapter');
-                Navigator.pop(context); // Close the AddChapter screen
+                print('Selected Grade: $selectedGrade');
+                print('Selected Subject: $selectedSubject');
+                print('Selected Subject: $selectedChapter');
+
+                var resp = await AddChapterFunc(
+                    selectedGrade, selectedSubject, selectedChapter);
+
+                if (resp.statusCode == 201) {
+                  ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                    content: Row(
+                      children: [
+                        Icon(
+                          Icons.check_circle,
+                          color: Colors.white,
+                        ),
+                        SizedBox(width: 8),
+                        Text('Chapter ${selectedChapter} Added Successfully!'),
+                      ],
+                    ),
+                    backgroundColor: Colors.green,
+                    duration: Duration(seconds: 4),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(10),
+                      ),
+                    ),
+                  ));
+                  Navigator.pop(context);
+                } else {
+                  setState(() {
+                    errorMessage = "Error occured try again!";
+                    print('error: $errorMessage');
+                  });
+                  return;
+                }
               },
               child: Text('Save Chapter'),
             ),
-            if (errorMessage != null)
-              Text(
-                errorMessage!,
-                style: TextStyle(color: Colors.red),
-              ),
           ],
         ),
       ),
     );
   }
-
-  Widget buildDropdown({
-    required String label,
-    required String? value,
-    required List<String>? items,
-    required void Function(String?) onChanged,
-  }) {
-    return items == null || items.isEmpty
-        ? Text(
-            'No $label exist',
-            style: TextStyle(color: Colors.red),
-          )
-        : DropdownButton<String>(
-            isExpanded: true,
-            value: value,
-            icon: const Icon(Icons.keyboard_arrow_down),
-            items: items.map<DropdownMenuItem<String>>((String item) {
-              return DropdownMenuItem<String>(
-                value: item,
-                child: Text(
-                  item,
-                  style: TextStyle(color: Color.fromARGB(255, 0, 0, 0)),
-                ),
-              );
-            }).toList(),
-            onChanged: onChanged,
-          );
-  }
 }
-

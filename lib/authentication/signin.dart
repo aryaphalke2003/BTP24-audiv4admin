@@ -134,7 +134,7 @@ class _SignInState extends State<SignIn> {
                                 //           ],
                                 //         ),
                                 //         backgroundColor: Colors.red.shade400,
-                                //         duration: Duration(seconds: 2),
+                                //         duration: Duration(seconds: 4),
                                 //         shape: RoundedRectangleBorder(
                                 //           borderRadius: BorderRadius.all(
                                 //             Radius.circular(10),
@@ -151,12 +151,12 @@ class _SignInState extends State<SignIn> {
                                 // print("Response: " +
                                 //     response.statusCode.toString());
                                 // print("Body: " + response.body);
-                                // if (response.statusCode == 200) 
-                                if(true){
+                                // if (response.statusCode == 200)
+                                if (true) {
                                   // var body = json.decode(response.body);
                                   userProvider.setUser(userP(uid: email));
-                                  userProvider
-                                      .setToken("eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyeWFwaGFsa2UyMDAzQGdtYWlsLmNvbSIsImV4cCI6MTcwODY3MTIyNn0.Ewzdr7M791XwBHY-PlzEUZs6aieFsbxAi9qU0PI_-U0");
+                                  userProvider.setToken(
+                                      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyeWFwaGFsa2UyMDAzQGdtYWlsLmNvbSIsImV4cCI6MTcwODY3MTIyNn0.Ewzdr7M791XwBHY-PlzEUZs6aieFsbxAi9qU0PI_-U0");
                                   userProvider.setDisplayName("arya");
                                   // print("Uid: " + userProvider.user!.uid);
                                   // print("Token: " + userProvider.user!.token);
@@ -202,7 +202,7 @@ class _SignInState extends State<SignIn> {
                                       ],
                                     ),
                                     backgroundColor: Colors.green,
-                                    duration: Duration(seconds: 2),
+                                    duration: Duration(seconds: 4),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(10),
@@ -223,7 +223,7 @@ class _SignInState extends State<SignIn> {
                                       ],
                                     ),
                                     backgroundColor: Colors.red.shade400,
-                                    duration: Duration(seconds: 2),
+                                    duration: Duration(seconds: 4),
                                     shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.all(
                                         Radius.circular(10),

@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import './pending_req.dart';
 import './profile.dart';
@@ -19,34 +18,22 @@ import './pending_req.dart';
 import './approved_req.dart';
 import './disapproved_req.dart';
 
-
 class CommonAppBarDrawer extends StatelessWidget {
-  
   final String title;
   final Widget body;
   userP? user;
 
-
   CommonAppBarDrawer({required this.title, required this.body});
-
- 
 
   // Create a GlobalKey for the Scaffold
   final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
-  
-
-
   @override
   Widget build(BuildContext context) {
-
     final userProvider = Provider.of<UserProvider>(context, listen: false);
     user = userProvider.user;
 
     return Scaffold(
-
-    
-
       key: scaffoldKey,
       appBar: AppBar(
         leading: IconButton(
@@ -56,7 +43,7 @@ class CommonAppBarDrawer extends StatelessWidget {
                 ?.openDrawer(); // Use the key to access the Scaffold's state
           },
         ),
-        title: Text(title ),
+        title: Text(title),
         actions: [
           // Add this action to place the logo at the end of the AppBar
           Padding(
@@ -80,12 +67,16 @@ class CommonAppBarDrawer extends StatelessWidget {
                 decoration: BoxDecoration(
                   color: Color.fromARGB(255, 193, 0, 97),
                 ),
-                child: Text(
-                  'Dashboard',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
+                child: Container(
+                  child: Text(
+                    'Dashboard',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                    ),
+                    textAlign: TextAlign.justify,
                   ),
+                  margin: EdgeInsets.only(top: 20),
                 ),
               ),
             ),
@@ -109,7 +100,8 @@ class CommonAppBarDrawer extends StatelessWidget {
                 Navigator.pop(context); // Close the drawer
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => ApprovedRequestPage()),
+                  MaterialPageRoute(
+                      builder: (context) => ApprovedRequestPage()),
                 );
               },
             ),
@@ -121,13 +113,14 @@ class CommonAppBarDrawer extends StatelessWidget {
                 Navigator.pop(context); // Close the drawer
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: (context) => DisapprovedRequestPage()),
+                  MaterialPageRoute(
+                      builder: (context) => DisapprovedRequestPage()),
                 );
               },
             ),
 
             ListTile(
-              title: Text('Add Class'),
+              title: Text('Add Grade'),
               leading: Icon(Icons.add, size: 20),
               onTap: () {
                 Navigator.pop(context); // Close the drawer
