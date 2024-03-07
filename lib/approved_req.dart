@@ -33,6 +33,7 @@ class ApprovedRequestPage extends StatelessWidget {
           return ListView.builder(
             itemCount: snapshot.data!.length,
             itemBuilder: (context, index) => RequestCard(
+               type: "approved",
                 snap: snapshot.data![snapshot.data!.length - index - 1]),
           );
         } else {

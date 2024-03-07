@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 import 'package:video_player/video_player.dart';
 import 'videoItems.dart';
@@ -52,21 +51,25 @@ class _AudioCardState extends State<AudioCard> {
     }
   }
 
-
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
-        Container(
-          height: _controller.value.isInitialized ? 200 : 50,
-          child: _controller.value.isInitialized
-              ? VideoItems(
-                  videoPlayerController: _controller,
-                  looping: true,
-                  autoplay: false,
-                )
-              : widget.snap['AudioFile'] != null ? CircularProgressIndicator() : Text('No Audiobook available'),
+        Expanded(
+          child: Container(
+            height: _controller.value.isInitialized ? 200 : 50,
+            child: _controller.value.isInitialized
+                ? VideoItems(
+                    videoPlayerController: _controller,
+                    looping: true,
+                    autoplay: false,
+                  )
+                : widget.snap['AudioFile'] != null
+                    ? CircularProgressIndicator()
+                    : Text('No Audiobook available'),
+          ),
         ),
+
         SizedBox(height: 10),
         // Conditionally render playback controls and buffering indicator
         widget.snap['AudioFile'] != null
@@ -76,7 +79,8 @@ class _AudioCardState extends State<AudioCard> {
                   ElevatedButton(
                     onPressed: () {
                       setState(() {
-                        index = (index - 1) % _sections.length;
+                        index = (index - 1 + _sections.length) % _sections.length;
+
                         _controller.seekTo(_sections[index]);
                       });
                     },
@@ -87,6 +91,7 @@ class _AudioCardState extends State<AudioCard> {
                     onPressed: () {
                       setState(() {
                         index = (index + 1) % _sections.length;
+
                         _controller.seekTo(_sections[index]);
                       });
                     },
@@ -117,4 +122,3 @@ class _AudioCardState extends State<AudioCard> {
     );
   }
 }
-

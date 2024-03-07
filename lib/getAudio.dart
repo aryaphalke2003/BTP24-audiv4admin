@@ -31,19 +31,18 @@ class Audios {
   Future<List> selectedAudio(className, chapterName, subjectName) async {
     try {
       print("indgetaudio");
-      String base_url = "http://127.0.0.1:8000/audiofiles/audiofiles/";
+      String base_url =
+          "https://arya09.pythonanywhere.com/audiofiles/audiofiles/";
 
-   
-        var result = await http.post(
-          Uri.parse(base_url),
-          body: {
-            'Class': className,
-            'ChapterName': chapterName,
-            'Subject': subjectName,
-          },
-        );
+      var result = await http.post(
+        Uri.parse(base_url),
+        body: {
+          'Class': className,
+          'ChapterName': chapterName,
+          'Subject': subjectName,
+        },
+      );
 
-        
       if (result.statusCode == 200) {
         var k = jsonDecode(result.body);
         if (k.length == 0) {

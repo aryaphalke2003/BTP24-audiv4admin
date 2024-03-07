@@ -7,8 +7,9 @@ import './viewreq.dart';
 
 class RequestCard extends StatefulWidget {
   final snap;
+  final type;
 
-  const RequestCard({required this.snap});
+  const RequestCard({required this.type, required this.snap});
 
   @override
   _RequestCardState createState() => _RequestCardState();
@@ -41,7 +42,7 @@ class _RequestCardState extends State<RequestCard> {
         Navigator.push(
           context,
           MaterialPageRoute(
-            builder: (context) => ViewReq(snap: widget.snap),
+            builder: (context) => ViewReq(type: widget.type, snap: widget.snap),
           ),
         );
       },

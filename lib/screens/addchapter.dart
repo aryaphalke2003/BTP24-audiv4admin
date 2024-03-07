@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart';
 import 'package:audiadmin/common_app_drawer.dart'; // Import CommonAppBarDrawer
 import 'package:http/http.dart' as http;
+import '../pending_req.dart';
 
 class AddChapter extends StatefulWidget {
   @override
@@ -28,7 +29,8 @@ class _AddChapterState extends State<AddChapter> {
   Future<void> fetchGrades() async {
     try {
       var response = await http.post(
-        Uri.parse('http://127.0.0.1:8000/audiofiles/audiofiles/fetch-data/'),
+        Uri.parse(
+            'https://arya09.pythonanywhere.com/audiofiles/audiofiles/fetch-data/'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -61,7 +63,8 @@ class _AddChapterState extends State<AddChapter> {
   Future<void> fillup(int grade) async {
     try {
       var response = await http.post(
-        Uri.parse('http://127.0.0.1:8000/audiofiles/audiofiles/fetch-data/'),
+        Uri.parse(
+            'https://arya09.pythonanywhere.com/audiofiles/audiofiles/fetch-data/'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -94,10 +97,12 @@ class _AddChapterState extends State<AddChapter> {
     }
   }
 
-  Future<Response> AddChapterFunc(int grade, String subject, String chapter) async {
+  Future<Response> AddChapterFunc(
+      int grade, String subject, String chapter) async {
     try {
       var response = await http.post(
-        Uri.parse('http://127.0.0.1:8000/audiofiles/audiofiles/add-data/'),
+        Uri.parse(
+            'https://arya09.pythonanywhere.com/audiofiles/audiofiles/add-data/'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -227,7 +232,7 @@ class _AddChapterState extends State<AddChapter> {
 
                 print('Selected Grade: $selectedGrade');
                 print('Selected Subject: $selectedSubject');
-                print('Selected Subject: $selectedChapter');
+                print('Selected Chapter: $selectedChapter');
 
                 var resp = await AddChapterFunc(
                     selectedGrade, selectedSubject, selectedChapter);
@@ -253,6 +258,12 @@ class _AddChapterState extends State<AddChapter> {
                     ),
                   ));
                   Navigator.pop(context);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PendingRequestPage()),
+                  );
+                  
                 } else {
                   setState(() {
                     errorMessage = "Error occured try again!";

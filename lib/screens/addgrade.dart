@@ -1,10 +1,9 @@
-
-
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:http/http.dart' as http;
+import '../pending_req.dart';
 import 'package:audiadmin/common_app_drawer.dart';
 
 class AddGrade extends StatefulWidget {
@@ -26,7 +25,8 @@ class _AddGradeState extends State<AddGrade> {
   // Function to fetch existing grades
   Future<void> fetchExistingGrades() async {
     final response = await http.post(
-      Uri.parse('http://127.0.0.1:8000/audiofiles/audiofiles/fetch-data/'),
+      Uri.parse(
+          'https://arya09.pythonanywhere.com/audiofiles/audiofiles/fetch-data/'),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -38,7 +38,8 @@ class _AddGradeState extends State<AddGrade> {
     if (response.statusCode == 200) {
       final List<dynamic> fetchedGrades = jsonDecode(response.body);
       setState(() {
-        existingGrades = fetchedGrades.map<int>((grade) => grade['grade']).toList();
+        existingGrades =
+            fetchedGrades.map<int>((grade) => grade['grade']).toList();
         existingGrades.sort();
       });
     } else {
@@ -52,7 +53,12 @@ class _AddGradeState extends State<AddGrade> {
       title: 'Add Grade',
       body: Padding(
         padding: const EdgeInsets.all(16.0),
-        child: Column(
+        child: 
+        
+        
+        
+        
+        Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             // Display existing grades
@@ -77,7 +83,7 @@ class _AddGradeState extends State<AddGrade> {
                 if (!validateGrade(enteredGrade)) {
                   setState(() {
                     errorMessage =
-                        'Invalid grade. Please enter a number between 1 and 12.';
+                        'Invalid grade. Please enter a number between 6 and 12.';
                   });
                   return;
                 }
@@ -112,6 +118,13 @@ class _AddGradeState extends State<AddGrade> {
                         ),
                       ),
                     ));
+                    Navigator.pop(context);
+                    Navigator.pushReplacement(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => PendingRequestPage()),
+                    );
+                    
                   } else {
                     ScaffoldMessenger.of(context).showSnackBar(SnackBar(
                       content: Row(
@@ -134,25 +147,37 @@ class _AddGradeState extends State<AddGrade> {
                     ));
                   }
 
-                  Navigator.pop(context); // Close the AddGrade screen
+                  // Close the AddGrade screen
+                  return;
                 }
               },
               child: Text('Save Grade'),
             ),
           ],
         ),
+
+
+
+
+
+
+
+
+
+        
       ),
     );
   }
 
   bool validateGrade(String grade) {
     int numericGrade = int.tryParse(grade) ?? 0;
-    return numericGrade >= 1 && numericGrade <= 12;
+    return numericGrade >= 6 && numericGrade <= 12;
   }
 
   Future<bool> saveGrade(int grade) async {
     final response = await http.post(
-      Uri.parse('http://127.0.0.1:8000/audiofiles/audiofiles/add-data/'),
+      Uri.parse(
+          'https://arya09.pythonanywhere.com/audiofiles/audiofiles/add-data/'),
       headers: {
         'Content-Type': 'application/json',
       },
@@ -165,4 +190,3 @@ class _AddGradeState extends State<AddGrade> {
     return response.statusCode == 201;
   }
 }
-

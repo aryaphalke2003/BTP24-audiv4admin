@@ -145,49 +145,39 @@ class _SignInState extends State<SignIn> {
                                 //     return;
                                 // }
 
-                                // password is validated by using firebase in built functions.
-                                // var response =
-                                //     await mainrepository.login(email, password);
-                                // print("Response: " +
-                                //     response.statusCode.toString());
-                                // print("Body: " + response.body);
-                                // if (response.statusCode == 200)
-                                if (true) {
-                                  // var body = json.decode(response.body);
-                                  userProvider.setUser(userP(uid: email));
-                                  userProvider.setToken(
-                                      "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6ImFyeWFwaGFsa2UyMDAzQGdtYWlsLmNvbSIsImV4cCI6MTcwODY3MTIyNn0.Ewzdr7M791XwBHY-PlzEUZs6aieFsbxAi9qU0PI_-U0");
-                                  userProvider.setDisplayName("arya");
-                                  // print("Uid: " + userProvider.user!.uid);
-                                  // print("Token: " + userProvider.user!.token);
-                                  // print("Display Name: " + userProvider.user!.displayName);
+                                // password is+ validated by using firebase in built functions.
+                                var response =
+                                    await mainrepository.login(email, password);
+                                print("Response: " +
+                                    response.statusCode.toString());
+                                print("Body: " + response.body);
+                                if (response.statusCode == 200){
+                                
+                                var body = json.decode(response.body);
+                                    userProvider.setUser(userP(uid: email));
+                                    userProvider.setToken(body['serializer']['token']);
+                                    userProvider.setDisplayName(body['name']);
+                                    // print("Uid: " + userProvider.user!.uid);
+                                    // print("Token: " + userProvider.user!.token);
+                                    // print("Display Name: " + userProvider.user!.displayName);
 
-                                  //if body contains photo url, set it
-                                  // response = await http.get(Uri.parse(base_url +
-                                  //     "auth/all-users/" +
-                                  //     userProvider.user!.uid));
-                                  // body = json.decode(response.body);
-                                  // // print("Body: " + response.body);
-                                  // // print("Response: " + response.statusCode.toString());
-                                  // if (body['profile_pic'] != null) {
-                                  //   print("Photo URL: " +
-                                  //       body['profile_pic'].toString());
-                                  //   userProvider
-                                  //       .setPhotoURL(body['profile_pic']);
-                                  // }
+                                    //if body contains photo url, set it
+                                    response = await http.get(Uri.parse(base_url + "auth/all-users/"+userProvider.user!.uid));
+                                    body = json.decode(response.body);
+                                    // print("Body: " + response.body);
+                                    // print("Response: " + response.statusCode.toString());
+                                    if (body['profile_pic'] != null) {
+                                      print("Photo URL: " + body['profile_pic'].toString());
+                                      userProvider.setPhotoURL(body['profile_pic']);
+                                    }
 
-                                  // if (body['organization'] != null) {
-                                  //   print("Organization: " +
-                                  //       body['organization'].toString());
-                                  //   userProvider
-                                  //       .setOrganization(body['organization']);
-                                  // }
+                                    if (body['organization'] != null) {
+                                      print("Organization: " + body['organization'].toString());
+                                      userProvider.setOrganization(body['organization']);
+                                    }
 
-                                  Navigator.pushAndRemoveUntil(
-                                      context,
-                                      MaterialPageRoute(
-                                          builder: (context) => HomePage()),
-                                      (route) => false);
+                                    Navigator.pushAndRemoveUntil(context, MaterialPageRoute(
+                                        builder: (context) => HomePage()), (route)=>false);
 
                                   ScaffoldMessenger.of(context)
                                       .showSnackBar(SnackBar(

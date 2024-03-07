@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:audiadmin/common_app_drawer.dart';
 import 'package:http/http.dart';
+import '../pending_req.dart';
 
 class AddSubject extends StatefulWidget {
   @override
@@ -17,7 +18,6 @@ class _AddSubjectState extends State<AddSubject> {
   String? errorMessage;
   TextEditingController subjectController = TextEditingController();
 
-
   @override
   void initState() {
     super.initState();
@@ -28,7 +28,8 @@ class _AddSubjectState extends State<AddSubject> {
   Future<void> fetchGrades() async {
     try {
       var response = await http.post(
-        Uri.parse('http://127.0.0.1:8000/audiofiles/audiofiles/fetch-data/'),
+        Uri.parse(
+            'https://arya09.pythonanywhere.com/audiofiles/audiofiles/fetch-data/'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -61,7 +62,8 @@ class _AddSubjectState extends State<AddSubject> {
   Future<Response> AddSubjectFunc(int grade, String subject) async {
     try {
       var response = await http.post(
-        Uri.parse('http://127.0.0.1:8000/audiofiles/audiofiles/add-data/'),
+        Uri.parse(
+            'https://arya09.pythonanywhere.com/audiofiles/audiofiles/add-data/'),
         headers: {
           'Content-Type': 'application/json',
         },
@@ -78,7 +80,6 @@ class _AddSubjectState extends State<AddSubject> {
       throw Exception('An error occurred. Please try again later.');
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -138,9 +139,8 @@ class _AddSubjectState extends State<AddSubject> {
             ElevatedButton(
               onPressed: () async {
                 selectedSubject = subjectController.text;
-                
+
                 if (selectedSubject.isEmpty) {
-                  
                   setState(() {
                     errorMessage = 'Subject name is required.';
                   });
@@ -173,6 +173,12 @@ class _AddSubjectState extends State<AddSubject> {
                     ),
                   ));
                   Navigator.pop(context);
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => PendingRequestPage()),
+                  );
+                  
                 } else {
                   setState(() {
                     errorMessage = "Error occured try again!";
