@@ -1,3 +1,4 @@
+import 'package:audiadmin/approved_req.dart';
 import 'package:audiadmin/audiocard.dart';
 import 'package:flutter/material.dart';
 import './videoplayer.dart';
@@ -105,15 +106,53 @@ class _ViewReqState extends State<ViewReq> {
     // Move the request to the disapproved database
     // Implement this according to your database structure and method
     print("in disapproval");
-    String url =
-        "https://arya09.pythonanywhere.com/audiofiles/audiofiles/disapprove/${widget.snap["id"]}/";
-    var result = await http.post(
-      Uri.parse(url),
-    );
-    if (result.statusCode == 200) print("disapproved");
+    // String url =
+    //     "https://arya09.pythonanywhere.com/audiofiles/audiofiles/disapprove/${widget.snap["id"]}/";
+    // var result = await http.post(
+    //   Uri.parse(url),
+    // );
+    //  if (result.statusCode == 200) {
+                print("disapproved");
+                // handleSnackBar2(context, 'Request is disapproved!', 2);
+                // Navigator.pop(context); // Close the dialog
+                // Navigator.pop(context); // Pop back after disapproval
+                // ApprovedRequestPage();
+                   Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ApprovedRequestPage(),
+          ),
+        );
+              // } else {
+                // Handle error scenario
+              // }
 
-    print(result.body);
+    // print(result.body);
   }
+
+void handleSnackBar2(BuildContext context, String message, int i) {
+  ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: Row(
+        children: [
+          Icon(
+            i == 1 ? Icons.check_circle : Icons.disabled_by_default_outlined,
+            color: Colors.white,
+          ),
+          SizedBox(width: 8),
+          Text(message),
+        ],
+      ),
+      backgroundColor: i == 1 ? Colors.green : Colors.red,
+      duration: Duration(seconds: 4),
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(
+          Radius.circular(10),
+        ),
+      ),
+    ),
+  );
+}
 
   void handleSnackBar(BuildContext context, String message, int i) {
     ScaffoldMessenger.of(context).showSnackBar(
@@ -223,12 +262,28 @@ class _ViewReqState extends State<ViewReq> {
               : widget.type == 'approved'
                   ? Padding(
                       padding: const EdgeInsets.only(top: 16, bottom: 16),
-                      child: Text(
-                        'Approved By: ${widget.snap['approvedBy']}',
-                        style: TextStyle(
-                          fontSize: 18,
-                          fontWeight: FontWeight.bold,
-                        ),
+                      child: Column(
+                        children: [
+                          Text(
+                            'Approved By: ${widget.snap['approvedBy']}',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: 20),
+                          ElevatedButton(
+                            onPressed: () {
+                              // Handle custom action for approved type
+                              // handleCustomAction(context);
+                              disapproveRequest();
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.red,
+                            ),
+                            child: Text('Disapprove'),
+                          ),
+                        ],
                       ),
                     )
                   : Padding(
